@@ -68,7 +68,7 @@ const handlerCreateUser = async (req, res) => {
     const sendemail = {
       from: 'noreply <noreply.workitapp@gmail.com>',
       to: user.email,
-      template_id: "d-eb572ff6f85d4608bb27855b694ec2ad",
+      template_id: "d-83fd1a58be5f4964b47edf9369e37718",
       dynamic_template_data: {
           "subject": "Activate your account on WorkItApp",
           "name": user.name,
