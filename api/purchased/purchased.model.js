@@ -5,32 +5,29 @@ const Schema = mongoose.Schema;
 const PurchasedSchema = new Schema({
   paymentId: {
     type: String,
-    required: true
+    required: false
   },
   status: {
     type: String,
-    required: true
+    required: false
   },
   paymentType: {
     type: String,
-    required: true
+    required: false
   },
   sellerId: {
     type: String,
+    ref: 'User',
     required: true
   },
   buyerId: {
     type: String,
+    ref: 'User',
     required: true
   },
   serviceId: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: 'Service',
-    required: true
-  },
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
     required: true
   },
   date: {
