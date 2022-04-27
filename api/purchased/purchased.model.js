@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const PurchasedSchema = new Schema({
   paymentId: {
     type: String,
-    required: false
+    required: false,
+    unique: true
   },
   status: {
     type: String,
