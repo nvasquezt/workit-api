@@ -45,7 +45,12 @@ const ServiceSchema = new Schema({
         trim: true,
         require: false
     },
-},
+    isActive: {
+        type: Boolean,
+        default: true,
+        require: false
+    },
+  },
 {
     timestamps: true,
     versionKey: false
