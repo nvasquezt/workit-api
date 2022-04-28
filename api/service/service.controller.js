@@ -85,7 +85,7 @@ const handlerUpdateService = async (req, res) => {
 
 const handlerServiceByQuery = async (req, res) => {
   try {
-    const { query } = req;
+    const { query } = req.params;
     const services = await getServiceByquery(query);
     if (!services) {
       return res.status(404).json({
