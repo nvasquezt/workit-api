@@ -1,5 +1,4 @@
 const fs = require('fs');
-
 const cloudinary = require('cloudinary').v2;
 
 const {
@@ -7,7 +6,8 @@ const {
     getServiceById,
     createService,
     deleteService,
-    patchService
+    patchService,
+    getServiceByquery
 } = require("./service.service");
 
 
@@ -83,10 +83,26 @@ const handlerUpdateService = async (req, res) => {
     }
 }
 
+const handlerServiceByQuery = async (req, res) => {
+  try {
+    const { query } = req;
+    const services = await getServiceByquery(query);
+    if (!services) {
+      return res.status(404).json({
+        message: 'Query not found'
+      });
+    }
+    res.json(services);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
 module.exports = {
     handlerAllServices,
     handlerServiceById,
     handlerCreateService,
     handlerDeleteService,
-    handlerUpdateService
+    handlerUpdateService,
+    handlerServiceByQuery
   }

@@ -38,7 +38,6 @@ const handlerPurchasedById = async (req, res) => {
 const handlerCreatePurchased = async (req, res) => {
   try {
     const { body } = req;
-    console.log(body);
     const purchasedService = await getCreatePurchased(body);
     if(!purchasedService){
       res.status(404).json({message: "Transaction not created"});

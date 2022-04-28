@@ -13,6 +13,7 @@
    app.use('/auth/local', authLocal);
    app.use('/api/purchased', puchased);
    app.use('/payments', payments);
+
  }
 
  module.exports = routes;

@@ -28,14 +28,32 @@ const patchService = async (id, service) => {
     const serviceToUpdate = await ServiceModel.findById(id);
     if(!serviceToUpdate){
         return null
-    } 
+    }
     return await ServiceModel.findByIdAndUpdate(id, service);
 }
+
+const getServiceByquery = async (query) => {
+try {
+  const queryObj = {
+    $or: [
+      { userId: { $regex: query, $options: 'i' } },
+      { title: { $regex: query, $options: 'i' } },
+      { description: { $regex: query, $options: 'i' } },
+      { tags: { $regex: query, $options: 'i' } },
+    ],
+  };
+  return await ServiceModel.find(queryObj);
+} catch (error) {
+  console.log(error);
+  return null;
+}}
+
 
 module.exports = {
     getAllServices,
     getServiceById,
     createService,
     deleteService,
-    patchService
+    patchService,
+    getServiceByquery
 }
