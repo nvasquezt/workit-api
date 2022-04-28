@@ -35,6 +35,10 @@ const PurchasedSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  scheduledDate: {
+    type: Date,
+    required: false
+  },
 } , {
   timestamps: true,
   versionKey: false
