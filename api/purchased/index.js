@@ -12,7 +12,7 @@ const {
 const router = Router();
 
 router.get('/', handlerAllPurchased);
-router.get('/:query', handlerPurchasedByQuery);
+router.get('/search/:query', handlerPurchasedByQuery);
 router.get('/:id', handlerPurchasedById);
 router.post('/', handlerCreatePurchased);
 router.patch('/:id', handlerUpdatePurchased);
