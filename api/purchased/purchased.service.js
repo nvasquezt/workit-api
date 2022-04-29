@@ -44,13 +44,15 @@ const getDeletePurchased = async (id) => {
   }
 }
 
-const getPurchasedByQuery = async (query) => {
+const getPurchasedByBuyerId = async (query) => {
   try {
     const queryObj = {
       $or: [{
-        sellerId: { $regex: query, $options: 'i' },
-        buyerId: { $regex: query, $options: 'i' },
+        buyerId: { $regex: query, $options: 'i' }
       }],
+      $and: [{
+        status: { $regex: 'approved' }
+      }]
     };
     return await PurchasedModel.find(queryObj);
   } catch (error) {
@@ -64,5 +66,5 @@ module.exports = {
   getCreatePurchased,
   getUpdatePurchased,
   getDeletePurchased,
-  getPurchasedByQuery
+  getPurchasedByBuyerId
 }
