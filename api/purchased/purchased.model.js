@@ -3,31 +3,41 @@ const Schema = mongoose.Schema;
 
 
 const PurchasedSchema = new Schema({
-  serviceId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Service',
+  paymentId: {
+    type: String,
+    required: false,
+    unique: true
+  },
+  status: {
+    type: String,
+    required: false
+  },
+  paymentType: {
+    type: String,
+    required: false
+  },
+  sellerId: {
+    type: String,
+    ref: 'User',
     required: true
   },
-  userId: {
-    type: Schema.Types.ObjectId,
+  buyerId: {
+    type: String,
     ref: 'User',
+    required: true
+  },
+  serviceId: {
+    type: String,
+    ref: 'Service',
     required: true
   },
   date: {
     type: Date,
     default: Date.now
   },
-  paymentId: {
-    type: String,
-    required: true
-  },
-  paymentType: {
-    type: String,
-    required: true
-  },
-  merchantOrderId: {
-    type: String,
-    required: true
+  scheduledDate: {
+    type: Date,
+    required: false
   },
 } , {
   timestamps: true,
