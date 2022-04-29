@@ -18,6 +18,7 @@ const ServiceSchema = new Schema({
     },
     userId: {
         type: String,
+        ref: 'User',
         require: true
     },
     cost: {
@@ -56,4 +57,5 @@ const ServiceSchema = new Schema({
     versionKey: false
 });
 
-module.exports = mongoose.model('Service', ServiceSchema);
+const service = mongoose.model('Service', ServiceSchema);
+module.exports = service;
