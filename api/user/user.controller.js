@@ -100,18 +100,37 @@ const handlerDeleteUser = async (req,res) => {
 }
 
 const handlerUpdateUser = async (req, res) => {
-  try{
-    const { id } = req.params;
-    const { body } = req;
-    const user = await patchUser(id, body);
-    if (!user) {
-      res.status(404).json({message: "User not found" })
-    } else {
-      res.json({message: `User updated`});
+    try{
+      const { id } = req.params;
+      const { file } = req;
+      console.log(file);
+      try {
+        
+    
+        const size = file.size / 1024 / 1024;
+        if (size > 5) {
+          return res.status(400).json({
+            message: 'Image size should be less than 5MB'
+          });
+        }
+      } catch (error) {
+        res.status(500).json(error);
+      }
+      const result  = await uploadImage(file.path);
+      const imagen = result.url;
+      console.log(imagen);
+      console.log(file);
+      const user = await patchUser(id, {imageprofile: imagen});
+      if (!user) {
+        res.status(404).json({message: "User not found" })
+      } else {
+        res.json({message: `User updated`});
+      }
     }
-  } catch(error) {
-    res.status(500).json({message: "Internal server error ref h->UpdateUser"});
-  }
+    catch{
+      console.log("error");
+    }
+    
 }
 
 
