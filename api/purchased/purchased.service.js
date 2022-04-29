@@ -51,7 +51,7 @@ const getPurchasedByBuyerId = async (query) => {
   try {
     const queryObj = {
       $or: [{
-        buyerId: { $regex: query, $options: 'i' }
+        sellerId: { $regex: query, $options: 'i' }
       }],
       $and: [{
         status: { $regex: 'approved' }
@@ -62,12 +62,25 @@ const getPurchasedByBuyerId = async (query) => {
     if (queryObj){
       const dataPushed = [];
       const alldata = await PurchasedModel.find(queryObj);
+
       for (let i = 0; i < alldata.length; i++) {
-        dataPushed.push(
-          await UserModel.findById(alldata[i].buyerId),
-          await ServiceModel.findById(alldata[i].serviceId)
-        );
+        const purchasedId = alldata[i]._id;
+        const buyerId = alldata[i].buyerId;
+        const userdata = await UserModel.findById(alldata[i].buyerId);
+        const servicedata = await ServiceModel.findById(alldata[i].serviceId)
+        const { name, last, username,imageprofile }  = userdata;
+        const {title} = servicedata;
+        dataPushed.push({
+          'purchasedId': purchasedId,
+          'buyerId': buyerId,
+          name,
+          last,
+          username,
+          title,
+          imageprofile
+        });
       }
+
       return dataPushed;
     } else {
       return null;
