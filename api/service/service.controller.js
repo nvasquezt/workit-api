@@ -77,6 +77,7 @@ const handlerDeleteService = async (req, res) => {
 }
 
 const handlerUpdateService = async (req, res) => {
+  try {
     const { id } = req.params;
     const { body } = req;
     const service = await patchService(id, body);
@@ -85,6 +86,9 @@ const handlerUpdateService = async (req, res) => {
     } else{
         res.json({message: "Service updated"});
     }
+  } catch (error) {
+    res.status(500).json(error);
+  }
 }
 
 const handlerSearchServiceById = async (req, res) => {
