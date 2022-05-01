@@ -3,7 +3,7 @@ const express = require('express');
 
 const configExpress = require('./config/express')
 const connectDB = require('./config/database');
-const routes = require('./routes');
+const routes = require('./utils/routes');
 
 const app = express();
 
@@ -14,7 +14,7 @@ routes(app);
 const port = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
-  res.send("WorkIt API") 
+  res.send("WorkIt API")
 })
 
 app.listen(port, () => {
