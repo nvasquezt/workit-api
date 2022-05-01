@@ -77,7 +77,7 @@ const handlerDeleteService = async (req, res) => {
 }
 
 const handlerUpdateService = async (req, res) => {
-  try{
+  try {
     const { id } = req.params;
     const { file } = req;
     try {
