@@ -20,7 +20,7 @@ router.post('/',upload.single('file'),isAuth(),handlerCreateService);
 router.get('/search/:query',handlerSearchServiceById);
 router.get('/', handlerAllServices);
 router.get('/:id', handlerServiceById);
-router.patch('/:id',upload.single('file'), handlerUpdateService);
+router.patch('/:id',upload.single('file'), isAuth() handlerUpdateService);
 router.delete('/:id', isAuth(), handlerDeleteService);
 
 
