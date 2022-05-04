@@ -77,24 +77,24 @@ const handlerDeleteService = async (req, res) => {
 }
 
 const handlerUpdateService = async (req, res) => {
-  try {
     const { id } = req.params;
     const { file } = req;
-    try {
-      
-  
-      const size = file.size / 1024 / 1024;
-      if (size > 5) {
-        return res.status(400).json({
-          message: 'Image size should be less than 5MB'
-        });
+  try {
+    if(file){
+      try {
+        const size = file.size / 1024 / 1024;
+        if (size > 5) {
+          return res.status(400).json({
+            message: 'Image size should be less than 5MB'
+          });
+        }
+      } catch (error) {
+        res.status(500).json(error);
       }
-    } catch (error) {
-      res.status(500).json(error);
+      const result  = await uploadImage(file.path);
+      const imagen = result.url;
+      req.body.image=imagen;
     }
-    const result  = await uploadImage(file.path);
-    const imagen = result.url;
-    req.body.image = imagen;
     const service = await patchService(id, req.body);
     if (!service) {
       res.status(404).json({message: "Service not found" })
