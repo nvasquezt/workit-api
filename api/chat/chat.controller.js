@@ -4,7 +4,7 @@ const {
 
 const handlerPostChat = async (req, res) => {
   try {
-    const chat = await patchChat(req.body);
+    const chat = await patchChat(req);
     if(!chat){
       res.status(404).json({message: "Chat not created"});
     }
@@ -12,6 +12,7 @@ const handlerPostChat = async (req, res) => {
       res.json(chat)
     }
   } catch (error) {
+    console.log(error, 'error');
     res.status(500).json(error);
   }
 }

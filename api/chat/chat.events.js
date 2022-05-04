@@ -4,7 +4,7 @@ function eventCreateMessage(Message) {
   socket.io.emit('Message:create', Message);
 }
 
-function eventGetAllMessage(Messages) {
+function eventReceivedMessage(Messages) {
   socket.io.emit('Message:getAll', Messages);
 }
 
@@ -18,7 +18,7 @@ function eventDeleteMessage(Message) {
 
 module.exports = {
   eventCreateMessage,
-  eventGetAllMessage,
+  eventReceivedMessage,
   eventUpdateMessage,
   eventDeleteMessage,
 };

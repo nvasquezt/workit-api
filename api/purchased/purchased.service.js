@@ -69,7 +69,7 @@ const getPurchasedByBuyerId = async (query) => {
         const userdata = await UserModel.findById(alldata[i].buyerId);
         const servicedata = await ServiceModel.findById(alldata[i].serviceId)
         const { name, last, username,imageprofile }  = userdata;
-        const {title} = servicedata;
+        const {title, _id} = servicedata;
         dataPushed.push({
           'purchasedId': purchasedId,
           'buyerId': buyerId,
@@ -77,7 +77,8 @@ const getPurchasedByBuyerId = async (query) => {
           last,
           username,
           title,
-          imageprofile
+          imageprofile,
+          'serviceId': _id
         });
       }
 

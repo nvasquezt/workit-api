@@ -1,29 +1,20 @@
 const PurchasedModel = require('../purchased/purchased.model');
-const eventCreateMessage = require('./chat.events');
+const {eventCreateMessage, eventReceivedMessage } = require('./chat.events');
 
-const patchChat = async (body) => {
+const patchChat = async (req) => {
+  console.log('body', req.body)
+  console.log('Params', req.params)
+  const { id } = req.params;
   try {
-    const { sellerId, buyerId, userName, message } = body;
-    const chatObj = {
-      $or: [{
-        sellerId: { $regex: sellerId, $options: 'i' }
-      }],
-      $and: [{
-        Buyerid: { $regex: buyerId, $options: 'i' }
-      }]
-    }
-    console.log(chatObj);
-    if (chatObj) {
-      const dataPushed = chatObj.chat;
-      dataPushed.push(message, userName);
-      const chat = await PurchasedModel.findByIdAndUpdate(chatObj._id, {chat: dataPushed}, {new: true});
-      return eventCreateMessage(chat.chat);
-    }
+    const chat = await PurchasedModel.findByIdAndUpdate(id, {$push:{chat: req.body}}, {new: true});
+    eventCreateMessage(chat.chat);
+    eventReceivedMessage(id);
+    return chat;
   } catch (error) {
+    console.log(error);
       throw error;
   }
 }
-
 module.exports = {
   patchChat,
 }
