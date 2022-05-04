@@ -8,6 +8,7 @@ const {
     deleteService,
     patchService,
     getServiceByquery,
+    getServiceBySellerId,
 } = require("./service.service");
 
 
@@ -152,6 +153,21 @@ const handlerSearchServiceBytag = async (req, res) => {
   }
 }
 
+const handlerSearchServiceBySellerId = async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+    const services = await getServiceBySellerId(sellerId);
+    if (!services) {
+      return res.status(404).json({
+        message: 'Services not found'
+      });
+    }
+    res.json(services);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
 module.exports = {
     handlerAllServices,
     handlerServiceById,
@@ -160,5 +176,6 @@ module.exports = {
     handlerUpdateService,
     handlerSearchServiceById,
     handlerSearchServiceByTitle,
-    handlerSearchServiceBytag
+    handlerSearchServiceBytag,
+    handlerSearchServiceBySellerId,
   }

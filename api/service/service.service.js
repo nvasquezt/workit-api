@@ -48,6 +48,17 @@ try {
   return null;
 }}
 
+const getServiceBySellerId = async (sellerId) => {
+  try {
+    const queryObj = {
+      userId: sellerId,
+    };
+    return await ServiceModel.find(queryObj);
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
 
 module.exports = {
     getAllServices,
@@ -55,5 +66,6 @@ module.exports = {
     createService,
     deleteService,
     patchService,
-    getServiceByquery
+    getServiceByquery,
+    getServiceBySellerId
 }
