@@ -4,7 +4,8 @@ const {
   getCreatePurchased,
   getUpdatePurchased,
   getDeletePurchased,
-  getPurchasedByBuyerId
+  getPurchasedByBuyerId,
+  getPurchasedBySellerId
 } = require ('./purchased.service');
 
 const handlerAllPurchased = async (req, res) => {
@@ -97,11 +98,27 @@ const handlerPurchasedByQuery = async (req, res) => {
   }
 }
 
+const handlerPurchasedByBought = async (req, res) => {
+  try {
+    const { bought } = req.params;
+    const purchasedService = await getPurchasedBySellerId(bought);
+    if(!purchasedService){
+      res.status(404).json({message: "Transaction not found"});
+    }
+    else {
+      res.json(purchasedService)
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
 module.exports = {
   handlerAllPurchased,
   handlerPurchasedById,
   handlerCreatePurchased,
   handlerUpdatePurchased,
   handlerDeletePurchased,
-  handlerPurchasedByQuery
+  handlerPurchasedByQuery,
+  handlerPurchasedByBought
 }

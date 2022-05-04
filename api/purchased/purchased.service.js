@@ -1,7 +1,6 @@
 const PurchasedModel = require('./purchased.model');
 const UserModel = require('../user/user.model');
 const ServiceModel = require('../service/service.model');
-const { populate } = require('./purchased.model');
 
 const getAllPurchased = async () => {
   try{
@@ -92,11 +91,56 @@ const getPurchasedByBuyerId = async (query) => {
   }
 }
 
+const getPurchasedBySellerId = async (bought) => {
+  try {
+    const queryObj = {
+      $or: [{
+        buyerId: { $regex: bought, $options: 'i' }
+      }],
+      $and: [{
+        status: { $regex: 'approved' }
+      }]
+    };
+    if (queryObj){
+      const dataPushed = [];
+      const alldata = await PurchasedModel.find(queryObj);
+
+      for (let i = 0; i < alldata.length; i++) {
+        const purchasedId = alldata[i]._id;
+        const sellerId = alldata[i].sellerId;
+        const date = alldata[i].date;
+        const userdata = await UserModel.findById(alldata[i].sellerId);
+        const servicedata = await ServiceModel.findById(alldata[i].serviceId)
+        const { name, last, username,imageprofile }  = userdata;
+        const {title} = servicedata;
+        dataPushed.push({
+          'purchasedId': purchasedId,
+          'sellerId': sellerId,
+          date,
+          name,
+          last,
+          username,
+          title,
+          imageprofile
+        });
+      }
+
+      return dataPushed;
+    } else {
+      return null;
+    }
+
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   getAllPurchased,
   getPurchasedById,
   getCreatePurchased,
   getUpdatePurchased,
   getDeletePurchased,
-  getPurchasedByBuyerId
+  getPurchasedByBuyerId,
+  getPurchasedBySellerId
 }

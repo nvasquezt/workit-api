@@ -31,10 +31,6 @@ const PurchasedSchema = new Schema({
     ref: 'Service',
     required: true
   },
-  scheduledDate: {
-    type: Object,
-    required: false
-  },
   chat: {
     type: Array,
     required: false
@@ -46,6 +42,10 @@ const PurchasedSchema = new Schema({
   scheduledDate: {
     type: Date,
     required: false
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   },
 } , {
   timestamps: true,

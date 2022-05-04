@@ -6,13 +6,15 @@ const {
     handlerCreatePurchased,
     handlerDeletePurchased,
     handlerUpdatePurchased,
-    handlerPurchasedByQuery
+    handlerPurchasedByQuery,
+    handlerPurchasedByBought
 } = require('./purchased.controller');
 
 const router = Router();
 
 router.get('/', handlerAllPurchased);
 router.get('/search/:query', handlerPurchasedByQuery);
+router.get('/searchbought/:bought', handlerPurchasedByBought);
 router.get('/:id', handlerPurchasedById);
 router.post('/', handlerCreatePurchased);
 router.patch('/:id', handlerUpdatePurchased);
