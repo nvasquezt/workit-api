@@ -47,7 +47,6 @@ const handlerServiceById = async (req, res) => {
 }
 
 const handlerCreateService = async (req, res) => {
-  console.log(req.body);
     try {
         const { body } = req;
         const tags = body.tags.split(",");
@@ -61,7 +60,6 @@ const handlerCreateService = async (req, res) => {
           res.status(201).json({message: "Service created" , service});
         }
       } catch (error) {
-        console.log(error);
         res.status(500).json(error);
       }
 }
@@ -110,7 +108,6 @@ const handlerUpdateService = async (req, res) => {
 const handlerSearchServiceById = async (req, res) => {
   try {
     const { query } = req.params;
-    console.log(query, "query que recibo");
     const services = await getServiceByquery(query);
     if (!services) {
       return res.status(404).json({
