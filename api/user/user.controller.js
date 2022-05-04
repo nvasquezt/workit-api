@@ -118,8 +118,6 @@ const handlerUpdateUser = async (req, res) => {
       }
       const result  = await uploadImage(file.path);
       const imagen = result.url;
-      console.log(imagen);
-      console.log(file);
       const user = await patchUser(id, {imageprofile: imagen});
       if (!user) {
         res.status(404).json({message: "User not found" })
