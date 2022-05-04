@@ -100,13 +100,11 @@ const handlerDeleteUser = async (req,res) => {
 }
 
 const handlerUpdateUser = async (req, res) => {
-    try{
-      const { id } = req.params;
-      const { file } = req;
-      console.log(file);
+  const { id } = req.params;
+  const { file } = req;  
+  try{
+    if(file){
       try {
-        
-    
         const size = file.size / 1024 / 1024;
         if (size > 5) {
           return res.status(400).json({
@@ -118,7 +116,9 @@ const handlerUpdateUser = async (req, res) => {
       }
       const result  = await uploadImage(file.path);
       const imagen = result.url;
-      const user = await patchUser(id, {imageprofile: imagen});
+      req.body.image=imagen;
+    }
+      const user = await patchUser(id, req.body);
       if (!user) {
         res.status(404).json({message: "User not found" })
       } else {
