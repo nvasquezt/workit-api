@@ -15,7 +15,7 @@ const handlerPayment = async (req, res) => {
       }
     ],
     back_urls:{
-      "success":'http://localhost:3000/checkout'
+      "success":'https://work-it.vercel.app/checkout'
     },
     auto_return: 'approved',
   };
