@@ -12,7 +12,7 @@ const handlerLoginUser = async (req, res) => {
         return res.status(401).json({ message: 'Invalid password' });
     }
     const token = signToken(user.profile);
-    return res.status(200).json({ userId: user._id, token: token });
+    return res.status(200).json({ userName:user.username ,userId: user._id, token: token });
 };
 
 const handlerVerifyAccount = async (req, res) => {

@@ -7,6 +7,6 @@ const {
 
 const router =  Router();
 
-router.post('/', handlerPostChat);
+router.patch('/:id', handlerPostChat);
 
 module.exports = router;

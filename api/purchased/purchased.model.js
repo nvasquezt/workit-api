@@ -31,6 +31,10 @@ const PurchasedSchema = new Schema({
     ref: 'Service',
     required: true
   },
+  scheduledDate: {
+    type: Object,
+    required: false
+  },
   chat: {
     type: Array,
     required: false
