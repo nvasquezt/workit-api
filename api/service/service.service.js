@@ -36,10 +36,10 @@ const getServiceByquery = async (query) => {
 try {
   const queryObj = {
     $or: [
-      { userId: { $regex: query, $options: 'i' } },
       { title: { $regex: query, $options: 'i' } },
       { description: { $regex: query, $options: 'i' } },
       { tags: { $regex: query, $options: 'i' } },
+      { username: { $regex: query, $options: 'i' } }
     ],
   };
   return await ServiceModel.find(queryObj);

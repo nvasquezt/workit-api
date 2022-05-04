@@ -7,7 +7,7 @@ const {
     createService,
     deleteService,
     patchService,
-    getServiceByquery
+    getServiceByquery,
 } = require("./service.service");
 
 
@@ -81,8 +81,8 @@ const handlerUpdateService = async (req, res) => {
     const { id } = req.params;
     const { file } = req;
     try {
-      
-  
+
+
       const size = file.size / 1024 / 1024;
       if (size > 5) {
         return res.status(400).json({
@@ -123,11 +123,45 @@ const handlerSearchServiceById = async (req, res) => {
   }
 }
 
+const handlerSearchServiceByTitle = async (req, res) => {
+  try {
+    const { query } = req.body;
+    const services = await getServiceByquery(query);
+    if (!services) {
+      return res.status(404).json({
+        message: 'Title not found'
+      });
+    } else {
+      res.json(services);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+const handlerSearchServiceBytag = async (req, res) => {
+  try {
+    const { tag } = req.body;
+    const services = await getServiceBytag(tag);
+    if (!services) {
+      return res.status(404).json({
+        message: 'Tag not found'
+      });
+    } else {
+      res.json(services);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
 module.exports = {
     handlerAllServices,
     handlerServiceById,
     handlerCreateService,
     handlerDeleteService,
     handlerUpdateService,
-    handlerSearchServiceById
+    handlerSearchServiceById,
+    handlerSearchServiceByTitle,
+    handlerSearchServiceBytag
   }
