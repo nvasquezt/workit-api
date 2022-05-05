@@ -9,6 +9,7 @@ const {
     patchService,
     getServiceByquery,
     getServiceBySellerId,
+    getServiceBytag
 } = require("./service.service");
 
 
@@ -154,7 +155,7 @@ const handlerSearchServiceByTitle = async (req, res) => {
 
 const handlerSearchServiceBytag = async (req, res) => {
   try {
-    const { tag } = req.body;
+    const { tag } = req.params;
     const services = await getServiceBytag(tag);
     if (!services) {
       return res.status(404).json({

@@ -60,6 +60,20 @@ const getServiceBySellerId = async (sellerId) => {
   }
 }
 
+const getServiceBytag = async (tag) => {
+  try {
+    const queryObj = {
+      $or: [
+      { tags: { $regex: tag, $options: 'i' } },
+      ],
+    };
+    return await ServiceModel.find(queryObj);
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 module.exports = {
     getAllServices,
     getServiceById,
@@ -67,5 +81,6 @@ module.exports = {
     deleteService,
     patchService,
     getServiceByquery,
-    getServiceBySellerId
+    getServiceBySellerId,
+    getServiceBytag
 }
