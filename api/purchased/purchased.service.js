@@ -109,6 +109,7 @@ const getPurchasedBySellerId = async (bought) => {
         const purchasedId = alldata[i]._id;
         const sellerId = alldata[i].sellerId;
         const date = alldata[i].date;
+        const scheduledDate = alldata[i].scheduledDate;
         const userdata = await UserModel.findById(alldata[i].sellerId);
         const servicedata = await ServiceModel.findById(alldata[i].serviceId)
         const { name, last, username,imageprofile }  = userdata;
@@ -121,7 +122,8 @@ const getPurchasedBySellerId = async (bought) => {
           last,
           username,
           title,
-          imageprofile
+          imageprofile,
+          scheduledDate
         });
       }
 
