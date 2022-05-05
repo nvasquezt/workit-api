@@ -67,7 +67,7 @@ const handlerCreateUser = async (req, res) => {
       }
       const result  = await uploadImage(file.path);
       const imagen = result.url;
-      req.body.image=imagen;
+      req.body.imageprofile=imagen;
     }
     const { name, last, username, password, email,} = body;
     if (!name || !last || !username || !password || !email) {
@@ -132,7 +132,7 @@ const handlerUpdateUser = async (req, res) => {
       }
       const result  = await uploadImage(file.path);
       const imagen = result.url;
-      req.body.image=imagen;
+      req.body.imageprofile=imagen;
     }
       const user = await patchUser(id, req.body);
       if (!user) {
