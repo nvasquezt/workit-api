@@ -53,6 +53,22 @@ const handlerUserById = async (req, res) => {
 const handlerCreateUser = async (req, res) => {
   try{
     const { body } = req;
+    const { file } = req; 
+    if(file){
+      try {
+        const size = file.size / 1024 / 1024;
+        if (size > 5) {
+          return res.status(400).json({
+            message: 'Image size should be less than 5MB'
+          });
+        }
+      } catch (error) {
+        res.status(500).json(error);
+      }
+      const result  = await uploadImage(file.path);
+      const imagen = result.url;
+      req.body.image=imagen;
+    }
     const { name, last, username, password, email,} = body;
     if (!name || !last || !username || !password || !email) {
       res.status(400).json({message: "Bad request"});

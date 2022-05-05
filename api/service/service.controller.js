@@ -47,23 +47,35 @@ const handlerServiceById = async (req, res) => {
 }
 
 const handlerCreateService = async (req, res) => {
-  console.log(req.body);
-    try {
-        const { body } = req;
-        const tags = body.tags.split(",");
-        body.tags = tags;
-        const service = await createService(body);
-        if (!service) {
-          return res.status(404).json({
-            message: 'Internal server error'
+  const { file } = req;
+  try {
+    if(file){
+      try {
+        const size = file.size / 1024 / 1024;
+        if (size > 5) {
+          return res.status(400).json({
+            message: 'Image size should be less than 5MB'
           });
-        }else{
-          res.status(201).json({message: "Service created" , service});
         }
       } catch (error) {
-        console.log(error);
         res.status(500).json(error);
       }
+      const result  = await uploadImage(file.path);
+      const imagen = result.url;
+      req.body.image=imagen;
+    }
+    const tags = req.body.tags.split(",");
+    req.body.tags = tags;
+    const service = await createService(req.body);
+    if (!service) {
+      res.status(404).json({message: "Service not found" })
+    } else {
+      res.json({message: `Service updated`});
+    }
+  }
+  catch{
+    console.log("error");
+  }
 }
 
 const handlerDeleteService = async (req, res) => {
