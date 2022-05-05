@@ -9,7 +9,11 @@ function connectSocket(server) {
     },
   };
   const io = socketio(server, options);
-
+  io.on('connection', (socket) => {
+    console.log('a user connected ' + socket.id);
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+    })});
   socket.io = io;
 }
 

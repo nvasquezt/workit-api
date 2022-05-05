@@ -43,6 +43,10 @@ const PurchasedSchema = new Schema({
     type: Date,
     required: false
   },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
 } , {
   timestamps: true,
   versionKey: false

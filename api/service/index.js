@@ -7,6 +7,9 @@ const {
     handlerDeleteService,
     handlerUpdateService,
     handlerSearchServiceById,
+    handlerSearchServiceByTitle,
+    handlerSearchServiceBySellerId,
+
 } = require('./service.controller');
 
 const { isAuth, hasRole } = require('../../auth/auth.service');
@@ -18,6 +21,8 @@ const upload = multer({ dest: './temp' });
 
 router.post('/',upload.single('file'),isAuth(),handlerCreateService);
 router.get('/search/:query',handlerSearchServiceById);
+router.get('/search=seller/:sellerId',handlerSearchServiceBySellerId);
+router.post('/search=title',handlerSearchServiceByTitle);
 router.get('/', handlerAllServices);
 router.get('/:id', handlerServiceById);
 router.patch('/:id',upload.single('file'), isAuth(), handlerUpdateService);

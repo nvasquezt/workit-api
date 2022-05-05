@@ -7,7 +7,8 @@ const {
     createService,
     deleteService,
     patchService,
-    getServiceByquery
+    getServiceByquery,
+    getServiceBySellerId,
 } = require("./service.service");
 
 
@@ -47,6 +48,7 @@ const handlerServiceById = async (req, res) => {
 }
 
 const handlerCreateService = async (req, res) => {
+
   const { file } = req;
   try {
     if(file){
@@ -122,11 +124,57 @@ const handlerUpdateService = async (req, res) => {
 const handlerSearchServiceById = async (req, res) => {
   try {
     const { query } = req.params;
-    console.log(query, "query que recibo");
     const services = await getServiceByquery(query);
     if (!services) {
       return res.status(404).json({
         message: 'Query not found'
+      });
+    }
+    res.json(services);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+const handlerSearchServiceByTitle = async (req, res) => {
+  try {
+    const { query } = req.body;
+    const services = await getServiceByquery(query);
+    if (!services) {
+      return res.status(404).json({
+        message: 'Title not found'
+      });
+    } else {
+      res.json(services);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+const handlerSearchServiceBytag = async (req, res) => {
+  try {
+    const { tag } = req.body;
+    const services = await getServiceBytag(tag);
+    if (!services) {
+      return res.status(404).json({
+        message: 'Tag not found'
+      });
+    } else {
+      res.json(services);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+const handlerSearchServiceBySellerId = async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+    const services = await getServiceBySellerId(sellerId);
+    if (!services) {
+      return res.status(404).json({
+        message: 'Services not found'
       });
     }
     res.json(services);
@@ -141,5 +189,8 @@ module.exports = {
     handlerCreateService,
     handlerDeleteService,
     handlerUpdateService,
-    handlerSearchServiceById
+    handlerSearchServiceById,
+    handlerSearchServiceByTitle,
+    handlerSearchServiceBytag,
+    handlerSearchServiceBySellerId,
   }
