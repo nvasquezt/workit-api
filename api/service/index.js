@@ -23,7 +23,7 @@ const upload = multer({ dest: './temp' });
 router.post('/',upload.single('file'),isAuth(),handlerCreateService);
 router.get('/search/:query',handlerSearchServiceById);
 router.get('/search=seller/:sellerId',handlerSearchServiceBySellerId);
-router.post('/search=title',handlerSearchServiceByTitle);
+router.get('/search=title/:query',handlerSearchServiceByTitle);
 router.get('/search=tag/:tag',handlerSearchServiceBytag);
 router.get('/', handlerAllServices);
 router.get('/:id', handlerServiceById);

@@ -139,7 +139,7 @@ const handlerSearchServiceById = async (req, res) => {
 
 const handlerSearchServiceByTitle = async (req, res) => {
   try {
-    const { query } = req.body;
+    const { query } = req.params;
     const services = await getServiceByquery(query);
     if (!services) {
       return res.status(404).json({
